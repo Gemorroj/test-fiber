@@ -2,33 +2,35 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-
 use TestFiber\Runner;
 
 
-$runner = new Runner();
-
-$start = microtime(true);
-$fiber1 = $runner->create(function () {
+$fiber1 = new \Fiber(function () {
     sleep(2);
-   return 'Hello';
+    return 'Hello';
 });
-$fiber2 = $runner->create(function () {
+$fiber2 = new \Fiber(function () {
     sleep(1);
     return 'World';
 });
-$fiber3 = $runner->create(function () {
+$fiber3 = new \Fiber(function () {
     sleep(5);
     return '!';
 });
+
+$start = microtime(true);
+$fiber1->start();
+$fiber2->start();
+$fiber3->start();
+
 $create = microtime(true);
 
+$runner = new Runner();
 $data = $runner->wait([$fiber1, $fiber2, $fiber3]);
 $wait = microtime(true);
 
-
 print_r($data);
 print_r([
-    'start' => $wait - $start,
-    'create' => $wait - $create,
+    'start' => $create - $start,
+    'wait' => $wait - $create,
 ]);

@@ -10,8 +10,8 @@ Array
 )
 Array
 (
-    [start] => 8.0303812026978
-    [create] => 3.4093856811523E-5
+    [start] => 8.012246131897
+    [wait] => 0.00062680244445801
 )
 
 Process finished with exit code 0
